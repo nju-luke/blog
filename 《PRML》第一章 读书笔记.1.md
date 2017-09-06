@@ -1,6 +1,6 @@
 ---
 title: 《PRML》第一章 读书笔记.1
-tags: [机器学习、PRML、模式识别]
+tags: [机器学习,PRML,模式识别]
 categories: 机器学习
 ---
 [TOC]
@@ -35,7 +35,7 @@ categories: 机器学习
 
 ### 4、多项式拟合
 
-![](https://ws3.sinaimg.cn/large/006tNc79gy1fgp606utlnj30kq0fc74x.jpg )
+<img src="https://ws3.sinaimg.cn/large/006tNc79gy1fgp606utlnj30kq0fc74x.jpg" style="zoom:50%">
 
 + 数据形式（x, y)
 
@@ -64,7 +64,7 @@ categories: 机器学习
 
 ### 1、基本概念
 
-![](https://ws4.sinaimg.cn/large/006tNc79gy1fgpdbo5eimj31cs0xgjw1.jpg)
+<img src="https://ws4.sinaimg.cn/large/006tNc79gy1fgpdbo5eimj31cs0xgjw1.jpg" style="zoom:40%">
 
 + 联合概率：$p(X=x_{i},Y=y_{j})=\frac{n_{ij}}{N}$
 + 边缘概率：$p(X=x_{i})=\sum_{j=1}^{2}p(X=x_{i},Y=y_{j})$
@@ -133,21 +133,57 @@ $$
 \Longrightarrow p(y|x)=\frac{p(x|y)p(y)}{p(x)}
 $$
 
-> 我们之前听说，好莱坞影星安吉丽娜朱莉通过《纽约时报》向大家揭露了她惨痛的经历。因携带有BRCA1/2致癌基因，她有87%的机会患上乳腺癌（我们假设5年）。为了防患于未然，她决定切除双乳(确切说是切除双侧乳腺)。美国乳腺癌的发病率为0.236%（每年每1000成年妇女中有2.36个人患上癌症。普通妇女人群5年患癌概率1.18%。
->
-> A:普通妇女5年癌症得病；
->
-> B：BRCA1/2致癌基因阳性；
->
-> P(A):普通妇女人群5年患癌概率1.18%；
->
-> P(B｜A):乳腺癌病人中BRCA1/2致癌基因阳性检测率87%；
->
-> P(A｜B):有阳性结果的条件下，安吉丽娜朱莉5年内患癌概率；
->
-> P(B)：结果为阳性的总可能性=检查阳性中的真阳性+检查阴性中的真阳性。
->
-> 通过贝叶斯公式，
->
-> P(A｜B)= P(B｜A)×P(A)/ P(B)=87%×1.18%/（87%×1.18%+13%×98.2%）=7.4%。
+> 考虑一个医疗诊断问题，有两种可能的假设：（1）病人有癌症。（2）病人无癌症。样本数据来自某化验测试，它也有两种可能的结果：阳性和阴性。假设我们已经有先验知识：在所有人口中只有0.008的人患病。此外，化验测试对有病的患者有98%的可能返回阳性结果，对无病患者有97%的可能返回阴性结果。假设现在有一个新病人，化验测试返回阳性，是否将病人断定为有癌症呢？
+> $$
+> P(癌症|阳性) = \frac{P(阳性|癌症)P(癌症)}{P(阳性)}
+> $$
+> $P(阳性|癌症)=0.98，P(癌症)=0.008，P(阳性)=0.008*0.98+0.992*0.03$$P(癌症|阳性)=20.85\%$
 
+贝叶斯理论的其他应用：
+
+<img src="https://ws2.sinaimg.cn/large/006tNc79gy1fgqqiuqfecj30gy02274i.jpg" style="zoom:50%">
+
+> 先验概率：是指根据以往经验和分析得到的概率
+> 后验概率：指在得到“结果”的信息后重新修正的概率
+
+### 5、高斯分布
+
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fgqqt10b9kj30qe04amxn.jpg)
+
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fgqqtkx7c7j30qy0jy758.jpg)
+
+中心极限定律：大量相互独立的随机变量，其均值（或者和）的分布以正态分布为极限（采样次数趋向无穷大的时候，就越接近正态分布）。
+
+> 比如随机间隔时间，从样本无限大样本T中以100个为基数求平均间隔时间，最后会发现平均间隔时间服从正态分布。
+>
+> 或者掷骰子，每个样本以10次出现的点数求平均值，当样本趋向于无穷时，平均值的分布为正态分布。
+
+### 6、 最大似然估计与最大后验概率估计
+
+**最大似然估计**：模型已定，参数未知
+
+<img src="https://ws3.sinaimg.cn/large/006tNc79gy1fgp606utlnj30kq0fc74x.jpg" style="zoom:50%">
+
+> 考虑前面的多项式拟合：给定参数$\omega,\beta$后, 对于数据点x的取值t，相对于理论值$y(x,\omega)$应该服从以理论值为重心的高斯分布。
+> <img src="https://ws3.sinaimg.cn/large/006tNc79gy1fgrgch19g3j30ik02e3yr.jpg" style="zoom:50%">
+> ☆从上式进行预测时不再是点到点的形式，而是给出t的概率分布形式。
+
+所以：对于全体数据，$\pmb{x} = (x_1,x_2,…,x_n)^T,\pmb{t}=(t_1,t_2,…,t_n)^T$, 整体存在的概率(因各数据点*相互独立*，所以用乘法法则），也就是**<u>似然函数</u>**：
+
+<img src="https://ws1.sinaimg.cn/large/006tNc79gy1fgri231mi7j30ly04oq3c.jpg" style="zoom:50%">
+
+> 思考：为何此处相互独立，而前面x，y不独立。
+
+上面的似然函数不好直接求解，一般转化为对数似然函数：
+![](https://ws1.sinaimg.cn/large/006tNc79gy1fgriabflm4j30yy04awf5.jpg)
+
+
+上式对w求导，得：
+<img src="https://ws3.sinaimg.cn/large/006tNc79gy1fgric4xa79j30jo052jrp.jpg" style="zoom:50%">
+
+**最大后验估计**：在先验分布的前提下获得的参数估计
+对于所求的w，假设预先知道其分布形式为$p(w)$, 则：
+$$
+p(w|x,t,\beta)=\frac{p(t|x,w,\beta)p(x,\beta)p(w)}{p(x,t,\beta)}\propto p(t|x,w,\beta)p(w)
+$$
+即：最大后验估计正比于最大似然估计与先验估计的乘积。
